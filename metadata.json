@@ -1,0 +1,8 @@
+{
+  "name": "Simple Stocks",
+  "description": "A GNOME extension to show stock prices in top panel",
+  "uuid": "simplestocks@shreyas",
+  "shell-version": [
+    "43"
+  ]
+}
