@@ -22,6 +22,7 @@
 
 const GETTEXT_DOMAIN = "my-indicator-extension";
 
+const Clutter = imports.gi.Clutter;
 const { GObject, St } = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
@@ -32,29 +33,6 @@ const GLib = imports.gi.GLib;
 
 const _ = ExtensionUtils.gettext;
 
-const Indicator = GObject.registerClass(
-  class Indicator extends PanelMenu.Button {
-    _init() {
-      super._init(0.0, _("My Shiny Indicator"));
-
-      let icon = new St.Icon({
-        icon_name: "face-smile-symbolic",
-        style_class: "system-status-icon",
-      });
-
-      this.add_child(icon);
-
-      let item = new PopupMenu.PopupMenuItem(_("Open Settings"));
-      item.connect("activate", () => {
-        GLib.spawn_command_line_async(
-          "gnome-extensions prefs simplestocks@shreyas"
-        );
-      });
-      this.menu.addMenuItem(item);
-    }
-  }
-);
-
 class Extension {
   constructor(uuid) {
     this._uuid = uuid;
@@ -63,8 +41,18 @@ class Extension {
   }
 
   enable() {
-    this._indicator = new Indicator();
-    Main.panel.addToStatusArea(this._uuid, this._indicator);
+    const button = new PanelMenu.Button(0.0);
+    let label = new St.Label({
+      text: "stockPrice",
+      y_align: Clutter.ActorAlign.CENTER,
+    });
+    button.actor.add_actor(label);
+    button.actor.connect("button-press-event", () => {
+      GLib.spawn_command_line_async(
+        "gnome-extensions prefs simplestocks@shreyas"
+      );
+    });
+    Main.panel.addToStatusArea(this._uuid, button);
   }
 
   disable() {
