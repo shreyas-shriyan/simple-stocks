@@ -18,7 +18,9 @@
 
 /* exported init */
 
-const GETTEXT_DOMAIN = 'my-indicator-extension';
+"use strict";
+
+const GETTEXT_DOMAIN = "my-indicator-extension";
 
 const { GObject, St } = imports.gi;
 
@@ -26,45 +28,51 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
+const GLib = imports.gi.GLib;
 
 const _ = ExtensionUtils.gettext;
 
 const Indicator = GObject.registerClass(
-class Indicator extends PanelMenu.Button {
+  class Indicator extends PanelMenu.Button {
     _init() {
-        super._init(0.0, _('My Shiny Indicator'));
+      super._init(0.0, _("My Shiny Indicator"));
 
-        this.add_child(new St.Icon({
-            icon_name: 'face-smile-symbolic',
-            style_class: 'system-status-icon',
-        }));
+      let icon = new St.Icon({
+        icon_name: "face-smile-symbolic",
+        style_class: "system-status-icon",
+      });
 
-        let item = new PopupMenu.PopupMenuItem(_('Show Notification'));
-        item.connect('activate', () => {
-            Main.notify(_('Whatʼs up, folks?'));
-        });
-        this.menu.addMenuItem(item);
+      this.add_child(icon);
+
+      let item = new PopupMenu.PopupMenuItem(_("Open Settings"));
+      item.connect("activate", () => {
+        GLib.spawn_command_line_async(
+          "gnome-extensions prefs simplestocks@shreyas"
+        );
+      });
+      this.menu.addMenuItem(item);
     }
-});
+  }
+);
 
 class Extension {
-    constructor(uuid) {
-        this._uuid = uuid;
+  constructor(uuid) {
+    this._uuid = uuid;
 
-        ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
-    }
+    ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
+  }
 
-    enable() {
-        this._indicator = new Indicator();
-        Main.panel.addToStatusArea(this._uuid, this._indicator);
-    }
+  enable() {
+    this._indicator = new Indicator();
+    Main.panel.addToStatusArea(this._uuid, this._indicator);
+  }
 
-    disable() {
-        this._indicator.destroy();
-        this._indicator = null;
-    }
+  disable() {
+    this._indicator.destroy();
+    this._indicator = null;
+  }
 }
 
 function init(meta) {
-    return new Extension(meta.uuid);
+  return new Extension(meta.uuid);
 }
