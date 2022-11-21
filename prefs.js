@@ -19,19 +19,27 @@ function fillPreferencesWindow(window) {
   page.add(group);
 
   // Create a new preferences row
-  const row = new Adw.ActionRow({ title: "Show Extension Indicator" });
+  const row = new Adw.ActionRow({ title: "Country" });
   group.add(row);
 
-  // Create the switch and bind its value to the `show-indicator` key
-  const toggle = new Gtk.Switch({
-    active: settings.get_boolean("example"),
-    valign: Gtk.Align.CENTER,
+  const comboBox = new Gtk.ComboBoxText();
+
+  const countries = ["Us", "India"];
+
+  countries.map((item, index) => {
+    comboBox.append(`${index}`, item);
   });
-  settings.bind("example", toggle, "active", Gio.SettingsBindFlags.DEFAULT);
+
+  // // Create the switch and bind its value to the `show-indicator` key
+  // const toggle = new Gtk.Switch({
+  //   active: settings.get_boolean("example"),
+  //   valign: Gtk.Align.CENTER,
+  // });
+  // settings.bind("example", toggle, "active", Gio.SettingsBindFlags.DEFAULT);
 
   // Add the switch to the row
-  row.add_suffix(toggle);
-  row.activatable_widget = toggle;
+  row.add_suffix(comboBox);
+  row.activatable_widget = comboBox;
 
   // Add our page to the window
   window.add(page);

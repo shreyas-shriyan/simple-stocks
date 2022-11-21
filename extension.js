@@ -46,8 +46,8 @@ class Extension {
       text: "stockPrice",
       y_align: Clutter.ActorAlign.CENTER,
     });
-    button.actor.add_actor(label);
-    button.actor.connect("button-press-event", () => {
+    button.add_actor(label);
+    button.connect("button-press-event", () => {
       GLib.spawn_command_line_async(
         "gnome-extensions prefs simplestocks@shreyas"
       );
