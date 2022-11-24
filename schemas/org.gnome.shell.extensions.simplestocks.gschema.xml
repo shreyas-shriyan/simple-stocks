@@ -2,8 +2,8 @@
 <schemalist>
   <schema id="org.gnome.shell.extensions.simplestocks" path="/org/gnome/shell/extensions/simplestocks/">
     <!-- See also: https://docs.gtk.org/glib/gvariant-format-strings.html -->
-    <key name="country" type="s">
-      <default>''</default>
+    <key name="country" type="i">
+      <default>0</default>
     </key>
   </schema>
 </schemalist>

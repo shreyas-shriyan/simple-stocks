@@ -26,15 +26,18 @@ function fillPreferencesWindow(window) {
 
   const countries = ["Us", "India"];
 
+  const selectedCountry = settings.get_int("country");
+
   countries.map((item, index) => {
     comboBox.append(`${index}`, item);
   });
 
-//  const selectedCountry = settings.get_value(country)
+  comboBox.set_active(selectedCountry);
 
-    comboBox.connect('changed',()=>{
-        log(comboBox.get_active_text())
-    })
+  comboBox.connect("changed", () => {
+    const selectedValue = comboBox.get_active();
+    settings.set_int("country", selectedValue);
+  });
 
   // // Create the switch and bind its value to the `show-indicator` key
   // const toggle = new Gtk.Switch({
