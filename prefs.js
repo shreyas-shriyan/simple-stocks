@@ -30,6 +30,12 @@ function fillPreferencesWindow(window) {
     comboBox.append(`${index}`, item);
   });
 
+//  const selectedCountry = settings.get_value(country)
+
+    comboBox.connect('changed',()=>{
+        log(comboBox.get_active_text())
+    })
+
   // // Create the switch and bind its value to the `show-indicator` key
   // const toggle = new Gtk.Switch({
   //   active: settings.get_boolean("example"),
