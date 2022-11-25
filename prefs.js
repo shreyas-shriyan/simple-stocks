@@ -50,6 +50,16 @@ function fillPreferencesWindow(window) {
   row.add_suffix(comboBox);
   row.activatable_widget = comboBox;
 
+  // search row
+  const searchRow = new Adw.ActionRow({});
+  group.add(searchRow);
+
+  // search bar
+  const searchBar = new Gtk.SearchBar();
+
+  searchRow.add_suffix(searchBar);
+  searchRow.activatable_widget = searchBar;
+
   // Add our page to the window
   window.add(page);
 }

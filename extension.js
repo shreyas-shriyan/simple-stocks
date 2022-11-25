@@ -26,6 +26,7 @@ const Clutter = imports.gi.Clutter;
 const { GObject, St } = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const PopupMenu = imports.ui.popupMenu;
@@ -35,24 +36,27 @@ const _ = ExtensionUtils.gettext;
 
 class Extension {
   constructor(uuid) {
-    this._uuid = uuid;
+    this._indicator = null;
 
     ExtensionUtils.initTranslations(GETTEXT_DOMAIN);
   }
 
   enable() {
-    const button = new PanelMenu.Button(0.0);
+    this._indicator = new PanelMenu.Button(0.0);
     let label = new St.Label({
       text: "stockPrice",
       y_align: Clutter.ActorAlign.CENTER,
     });
-    button.add_actor(label);
-    button.connect("button-press-event", () => {
+    this._indicator.add_actor(label);
+    this._indicator.connect("button-press-event", () => {
       GLib.spawn_command_line_async(
         "gnome-extensions prefs simplestocks@shreyas"
       );
     });
-    Main.panel.addToStatusArea(this._uuid, button);
+    Main.panel.addToStatusArea(
+      `${Me.metadata.name} Indicator`,
+      this._indicator
+    );
   }
 
   disable() {
