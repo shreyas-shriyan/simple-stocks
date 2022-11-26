@@ -51,14 +51,15 @@ function fillPreferencesWindow(window) {
   row.activatable_widget = comboBox;
 
   // search row
-  const searchRow = new Adw.ActionRow({});
-  group.add(searchRow);
+
+  const searchGroup = new Adw.PreferencesGroup();
+  page.add(searchGroup);
 
   // search bar
-  const searchBar = new Gtk.SearchBar();
+  const searchEntry = new Gtk.SearchEntry();
+  // searchEntry.show();
 
-  searchRow.add_suffix(searchBar);
-  searchRow.activatable_widget = searchBar;
+  searchGroup.add(searchEntry);
 
   // Add our page to the window
   window.add(page);
