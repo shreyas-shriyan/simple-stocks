@@ -39,13 +39,6 @@ function fillPreferencesWindow(window) {
     settings.set_int("country", selectedValue);
   });
 
-  // // Create the switch and bind its value to the `show-indicator` key
-  // const toggle = new Gtk.Switch({
-  //   active: settings.get_boolean("example"),
-  //   valign: Gtk.Align.CENTER,
-  // });
-  // settings.bind("example", toggle, "active", Gio.SettingsBindFlags.DEFAULT);
-
   // Add the switch to the row
   row.add_suffix(comboBox);
   row.activatable_widget = comboBox;
@@ -57,7 +50,6 @@ function fillPreferencesWindow(window) {
 
   // search bar
   const searchEntry = new Gtk.SearchEntry();
-  // searchEntry.show();
 
   searchGroup.add(searchEntry);
 
