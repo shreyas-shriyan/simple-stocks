@@ -50,6 +50,7 @@ function fillPreferencesWindow(window) {
 
   // search bar
   const searchEntry = new Gtk.SearchEntry();
+  searchEntry.search_delay = 1500;
   searchEntry.connect("search-changed", (e) => {
     log(searchEntry.get_text());
   });
