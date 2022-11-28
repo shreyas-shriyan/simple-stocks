@@ -50,6 +50,11 @@ function fillPreferencesWindow(window) {
 
   // search bar
   const searchEntry = new Gtk.SearchEntry();
+  searchEntry.connect("search-changed", (e) => {
+    log(searchEntry.get_text());
+  });
+
+  // log(searchText);
 
   searchGroup.add(searchEntry);
 
