@@ -48,14 +48,22 @@ function fillPreferencesWindow(window) {
   const searchGroup = new Adw.PreferencesGroup();
   page.add(searchGroup);
 
+  const renderRows = (searchEntry) => {
+    const searchText = searchEntry.get_text();
+    const group = new Adw.PreferencesGroup();
+    page.add(group);
+
+    Array.from(searchText).map((item, index) => {
+      // Create a new preferences row
+      const row = new Adw.ActionRow({ title: `${index}` });
+      group.add(row);
+    });
+  };
+
   // search bar
   const searchEntry = new Gtk.SearchEntry();
   searchEntry.search_delay = 1500;
-  searchEntry.connect("search-changed", (e) => {
-    log(searchEntry.get_text());
-  });
-
-  // log(searchText);
+  searchEntry.connect("search-changed", renderRows);
 
   searchGroup.add(searchEntry);
 
