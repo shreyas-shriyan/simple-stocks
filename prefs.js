@@ -44,20 +44,34 @@ function fillPreferencesWindow(window) {
   row.activatable_widget = comboBox;
 
   // search row
-
   const searchGroup = new Adw.PreferencesGroup();
   page.add(searchGroup);
 
-  const renderRows = (searchEntry) => {
+  // response group
+  let responseGroup = new Adw.PreferencesGroup();
+  page.add(responseGroup);
+
+  const listBox = new Gtk.ListBox();
+  responseGroup.add(listBox);
+
+  const renderRows = () => {
+    log(searchEntry);
+    //response row group
+    const newResponseGroup = new Adw.PreferencesGroup();
+
     const searchText = searchEntry.get_text();
-    const group = new Adw.PreferencesGroup();
-    page.add(group);
 
     Array.from(searchText).map((item, index) => {
-      // Create a new preferences row
-      const row = new Adw.ActionRow({ title: `${index}` });
-      group.add(row);
+      // // Create a new preferences row
+      // const row = new Adw.ActionRow({ title: `${index + 1}` });
+      // newResponseGroup.add(row);
+
+      const label = new Gtk.Label();
+      label.set_label(`${index}`);
+      listBox.append(label);
     });
+
+    // responseGroup = newResponseGroup;
   };
 
   // search bar
