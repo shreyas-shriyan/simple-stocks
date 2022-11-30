@@ -62,16 +62,10 @@ function fillPreferencesWindow(window) {
     const searchText = searchEntry.get_text();
 
     Array.from(searchText).map((item, index) => {
-      // // Create a new preferences row
-      // const row = new Adw.ActionRow({ title: `${index + 1}` });
-      // newResponseGroup.add(row);
-
       const label = new Gtk.Label();
       label.set_label(`${index}`);
       listBox.append(label);
     });
-
-    // responseGroup = newResponseGroup;
   };
 
   // search bar
